@@ -1,25 +1,36 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 const Problem1 = () => {
+    const [persons, setPersons] = useState([]);
+    const [show, setShow] = useState([]);
 
-    const [show, setShow] = useState('all');
-
-    const handleClick = (val) =>{
-        setShow(val);
-    }
     const handleSubmit=event=>{
         event.preventDefault();
         const form = event.target;
-        const name = form.name.value();
+        const name = form.name.value;
+        const status = form.status.value;
+        const newPerson = {name: name, status: status};
+        const data = [...persons, newPerson];
+        setShow(data);
+        setPersons(data);
+        form.reset();
     }
 
+    const handleClick = (val) =>{
+        if(val === 'all'){
+            setShow(persons);
+        }else{
+            const query = persons.filter(person=>person.status.toLowerCase() === val);
+            setShow(query);
+        }
+    }
     return (
 
         <div className="container">
             <div className="row justify-content-center mt-5">
                 <h4 className='text-center text-uppercase mb-5'>Problem-1</h4>
                 <div className="col-6 ">
-                    <form onClick={handleSubmit} className="row gy-2 gx-3 align-items-center mb-4">
+                    <form onSubmit={handleSubmit} className="row gy-2 gx-3 align-items-center mb-4">
                         <div className="col-auto">
                             <input type="text" className="form-control" placeholder="Name" name='name'/>
                         </div>
@@ -51,9 +62,12 @@ const Problem1 = () => {
                             <th scope="col">Status</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        
-                        </tbody>
+                        {
+                           show.map((p, index)=><tbody key={index}>
+                                <td>{p.name}</td>
+                                <td>{p.status}</td>
+                            </tbody>)
+                        }
                     </table>
                 </div>
             </div>

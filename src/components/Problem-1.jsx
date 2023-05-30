@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Problem1 = () => {
     const [persons, setPersons] = useState([]);
@@ -64,8 +65,10 @@ const Problem1 = () => {
                         </thead>
                         {
                            show.map((p, index)=><tbody key={index}>
+                            <tr>
                                 <td>{p.name}</td>
                                 <td>{p.status}</td>
+                            </tr>
                             </tbody>)
                         }
                     </table>
